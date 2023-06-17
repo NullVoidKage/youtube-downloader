@@ -24,8 +24,7 @@ def download():
         return send_file(
             buffer,
             download_name=f"{yt.title}.mp4",
-            mimetype='video/mp4',
-            as_attachment=True
+            mimetype='video/mp4'
         )
     except Exception as e:
         return render_template('index.html', error=str(e))

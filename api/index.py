@@ -33,5 +33,7 @@ def success(filename):
         as_attachment=True
     )
 
+os.makedirs(os.path.join(app.root_path, 'downloads'), exist_ok=True)
+ 
 if __name__ == '__main__':
     app.run()

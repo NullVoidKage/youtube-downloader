@@ -3,7 +3,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 from flask import Flask, render_template, request, redirect, url_for, send_file
 from pytube import YouTube
-from io import BytesIO
+import tempfile
 
 app = Flask(__name__)
 
@@ -17,10 +17,9 @@ def download():
     try:
         yt = YouTube(link)
         stream = yt.streams.get_highest_resolution()
-        video_bytes = BytesIO()
-        stream.download(output_path=video_bytes)
-        video_bytes.seek(0)
-        return send_file(video_bytes, attachment_filename=f"{yt.title}.mp4", as_attachment=True)
+        video_file = tempfile.NamedTemporaryFile(delete=False)
+        stream.download(output_path=video_file.name)
+        return send_file(video_file.name, as_attachment=True, attachment_filename=f"{yt.title}.mp4")
     except Exception as e:
         return render_template('index.html', error=str(e))
 

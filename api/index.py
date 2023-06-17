@@ -1,13 +1,14 @@
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from pytube import YouTube
+import tempfile
 import os
 import dropbox
 
 app = Flask(__name__)
-DOWNLOADS_DIR = 'downloads'  # Directory to store downloaded videos
+DOWNLOADS_DIR = tempfile.mkdtemp()  # Create a temporary directory to store downloaded videos
 DROPBOX_ACCESS_TOKEN = 'sl.BgfdEz36PiCM5P5Orb-BPmkrgCF7Ita-3YwdDfRf25W8FzrUh7ZmVXAoiH_UwjkjJ3nB_NgD2QSirhyzykkj8Zex4hdh3Ylqqv4wIv_dpLeAe3wMtNAXEEhPbkMT_SOSwP3SeOk'  # Replace with your Dropbox access token
 
 @app.route('/')

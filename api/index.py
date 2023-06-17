@@ -29,8 +29,8 @@ def success(filename):
     file_path = os.path.join('/tmp', filename)
     return send_file(
         file_path,
-        attachment_filename=filename,
-        as_attachment=True
+        as_attachment=True,
+        attachment_filename=filename
     )
 
 if __name__ == '__main__':

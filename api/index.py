@@ -17,10 +17,12 @@ def download():
     try:
         yt = YouTube(link)
         stream = yt.streams.get_highest_resolution()
-        video_data = stream.stream_to_buffer()
+        buffer = io.BytesIO()
+        stream.stream_to_buffer(buffer)
+        buffer.seek(0)
 
         return send_file(
-            io.BytesIO(video_data),
+            buffer,
             download_name=f"{yt.title}.mp4",
             mimetype='video/mp4',
             as_attachment=True

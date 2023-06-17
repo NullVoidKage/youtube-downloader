@@ -18,11 +18,12 @@ def download():
         yt = YouTube(link)
         stream = yt.streams.get_highest_resolution()
         video_data = stream.stream_to_buffer()
+
         return send_file(
             io.BytesIO(video_data),
+            download_name=f"{yt.title}.mp4",
             mimetype='video/mp4',
-            as_attachment=True,
-            attachment_filename=f"{yt.title}.mp4"
+            as_attachment=True
         )
     except Exception as e:
         return render_template('index.html', error=str(e))

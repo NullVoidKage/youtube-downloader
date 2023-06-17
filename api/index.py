@@ -18,7 +18,7 @@ def download():
         yt = YouTube(link)
         stream = yt.streams.get_highest_resolution()
         filename = f"{yt.title}.mp4"
-        file_path = os.path.join(app.root_path, 'downloads', filename)
+        file_path = os.path.join('/tmp', filename)  # Save file to /tmp directory
         stream.download(output_path=file_path)
         return redirect(url_for('success', filename=filename))
     except Exception as e:
@@ -26,14 +26,12 @@ def download():
 
 @app.route('/success/<filename>')
 def success(filename):
-    file_path = os.path.join(app.root_path, 'downloads', filename)
+    file_path = os.path.join('/tmp', filename)
     return send_file(
         file_path,
         attachment_filename=filename,
         as_attachment=True
     )
 
-os.makedirs(os.path.join(app.root_path, 'downloads'), exist_ok=True)
- 
 if __name__ == '__main__':
     app.run()

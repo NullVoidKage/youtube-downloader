@@ -23,8 +23,8 @@ def download():
         temp_filename = str(uuid.uuid4())
         temp_filepath = os.path.join(temp_dir, temp_filename)
         stream.download(output_path=temp_filepath)
-        return send_file(temp_filepath, as_attachment=True, attachment_filename=f"{yt.title}.mp4",
-                         mimetype='video/mp4')
+        return send_file(temp_filepath, as_attachment=True,
+                         attachment_filename=f"{yt.title}.mp4")
     except Exception as e:
         return render_template('index.html', error=str(e))
 

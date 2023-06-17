@@ -1,7 +1,7 @@
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
-from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from pytube import YouTube
 import os
 
@@ -26,12 +26,7 @@ def download():
 
 @app.route('/success/<filename>')
 def success(filename):
-    file_path = os.path.join('/tmp', filename)
-    return send_file(
-        file_path,
-        as_attachment=True,
-        attachment_filename=filename
-    )
+    return send_from_directory('/tmp', filename, as_attachment=True)
 
 if __name__ == '__main__':
     app.run()
